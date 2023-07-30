@@ -14,6 +14,7 @@ import com.example.shiftlabapplication.features.join.R
 import com.example.shiftlabapplication.features.join.databinding.FragmentJoinBinding
 import com.example.shiftlabapplication.features.join.presentation.JoinState
 import com.example.shiftlabapplication.features.join.presentation.JoinViewModel
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Date
 
@@ -55,10 +56,6 @@ class JoinFragment : Fragment() {
                     userData = userData.copy(name = text.toString())
                     checkSummary()
                 }
-                /*viewModel.name = text.toString()
-                viewModel.userData = viewModel.userData.copy(name = text.toString())
-                viewModel.checkName()
-                viewModel.checkSummary()*/
             }
 
             surnameField.doOnTextChanged { text, _, _, _ ->
@@ -66,9 +63,6 @@ class JoinFragment : Fragment() {
                     userData = userData.copy(surname = text.toString())
                     checkSummary()
                 }
-                /*viewModel.surname = text.toString()
-                viewModel.checkSurname()
-                viewModel.checkSummary()*/
             }
 
             birthDateField.setOnClickListener {
@@ -83,8 +77,6 @@ class JoinFragment : Fragment() {
                                     userData = userData.copy(birthDate = date)
                                     checkSummary()
                                 }
-                                /*viewModel.birthDate = str
-                                viewModel.checkSummary()*/
                             }
                         }
                     show(
@@ -97,16 +89,16 @@ class JoinFragment : Fragment() {
             passwordField.doOnTextChanged { text, _, _, _ ->
                 with(viewModel) {
                     userData = userData.copy(password = text.toString())
+                    checkRepeatPassword(repeatPasswordField.text.toString())
                     checkSummary()
                 }
-                /*viewModel.password = text.toString()
-                viewModel.checkPassword()
-                viewModel.checkSummary()*/
             }
 
             repeatPasswordField.doOnTextChanged { text, _, _, _ ->
-                viewModel.checkRepeatPassword(text.toString())
-                viewModel.checkSummary()
+                with(viewModel) {
+                    checkRepeatPassword(text.toString())
+                    checkSummary()
+                }
             }
 
             joinButton.setOnClickListener {
@@ -121,22 +113,25 @@ class JoinFragment : Fragment() {
 
     private fun handleState(state: JoinState) {
         when (state) {
-            is JoinState.Error.Name -> renderNameError()
-            is JoinState.Solved.Name -> renderNameErrorSolved()
-            is JoinState.Error.Surname -> renderSurnameError()
-            is JoinState.Solved.Surname -> renderSurnameErrorSolved()
-            is JoinState.Error.BirthYear -> renderBirthYearError()
-            is JoinState.Solved.BirthDate -> renderBirthYearErrorSolved()
-            is JoinState.Error.Password -> renderPasswordError()
-            is JoinState.Solved.Password -> renderPasswordErrorSolved()
-            is JoinState.Error.RepeatPassword -> renderRepeatPasswordError()
-            is JoinState.Solved.RepeatPassword -> renderRepeatPasswordErrorSolved()
+            is JoinState.Error.Name -> renderError(binding.nameInputLayout, R.string.name_error)
+            is JoinState.Solved.Name -> renderErrorSolved(binding.nameInputLayout)
+            is JoinState.Error.Surname -> renderError(binding.surnameInputLayout, R.string.surname_error)
+            is JoinState.Solved.Surname -> renderErrorSolved(binding.surnameInputLayout)
+            is JoinState.Error.BirthYear -> renderError(binding.birthDateInputLayout, R.string.birth_date_error)
+            is JoinState.Solved.BirthDate -> renderErrorSolved(binding.birthDateInputLayout)
+            is JoinState.Error.Password -> renderError(binding.passwordInputLayout, R.string.password_error)
+            is JoinState.Solved.Password -> renderErrorSolved(binding.passwordInputLayout)
+            is JoinState.Error.RepeatPassword -> renderError(binding.repeatPasswordInputLayout, R.string.repeat_password_error)
+            is JoinState.Solved.RepeatPassword -> renderErrorSolved(binding.repeatPasswordInputLayout)
             is JoinState.NoError -> renderRegistration()
             else -> renderInitial()
         }
     }
 
     private fun renderInitial() {
+        with(binding) {
+            joinButton.isEnabled = false
+        }
     }
 
     private fun renderRegistration() {
@@ -145,73 +140,17 @@ class JoinFragment : Fragment() {
         }
     }
 
-    private fun renderNameError() {
+    private fun renderError(inputLayout: TextInputLayout, id: Int) {
         with(binding) {
             joinButton.isEnabled = false
-            nameInputLayout.error = getString(R.string.name_error)
+            inputLayout.error = getString(id)
         }
     }
 
-    private fun renderNameErrorSolved() {
+    private fun renderErrorSolved(inputLayout: TextInputLayout) {
         with(binding) {
             joinButton.isEnabled = false
-            nameInputLayout.error = ""
-        }
-    }
-
-    private fun renderSurnameError() {
-        with(binding) {
-            joinButton.isEnabled = false
-            surnameInputLayout.error = getString(R.string.surname_error)
-        }
-    }
-
-    private fun renderSurnameErrorSolved() {
-        with(binding) {
-            joinButton.isEnabled = false
-            surnameInputLayout.error = ""
-        }
-    }
-
-    private fun renderBirthYearError() {
-        with(binding) {
-            joinButton.isEnabled = false
-            birthDateInputLayout.error = getString(R.string.birth_date_error)
-        }
-    }
-
-    private fun renderBirthYearErrorSolved() {
-        with(binding) {
-            joinButton.isEnabled = false
-            birthDateInputLayout.error = ""
-        }
-    }
-
-    private fun renderPasswordError() {
-        with(binding) {
-            joinButton.isEnabled = false
-            passwordInputLayout.error = getString(R.string.password_error)
-        }
-    }
-
-    private fun renderPasswordErrorSolved() {
-        with(binding) {
-            joinButton.isEnabled = false
-            passwordInputLayout.error = ""
-        }
-    }
-
-    private fun renderRepeatPasswordError() {
-        with(binding) {
-            joinButton.isEnabled = false
-            repeatPasswordInputLayout.error = getString(R.string.repeat_password_error)
-        }
-    }
-
-    private fun renderRepeatPasswordErrorSolved() {
-        with(binding) {
-            joinButton.isEnabled = false
-            repeatPasswordInputLayout.error = ""
+            inputLayout.error = ""
         }
     }
 }

@@ -23,13 +23,14 @@ class JoinViewModel(
     private val _state: MutableLiveData<JoinState> = MutableLiveData(JoinState.Initial)
     val state: LiveData<JoinState> = _state
 
+    private val nameRegex = Regex("(?=[A-Z]).{3,}|(?=[А-Я]).{3,}")
     private val passwordRegex = Regex("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9@#\$%]).{8,}")
 
     var userData: UserDataEntity = UserDataEntity()
     var isPasswordChecked = false
 
     private fun checkName(): Boolean {
-        return if (userData.name.length <= 2 && userData.name.isNotEmpty()) {
+        return if (!userData.name.matches(nameRegex) && userData.name.isNotEmpty()) {
             _state.value = JoinState.Error.Name
             false
         } else {
@@ -40,7 +41,7 @@ class JoinViewModel(
     }
 
     private fun checkSurname(): Boolean {
-        return if (userData.surname.length <= 4 && userData.surname.isNotEmpty()) {
+        return if (!userData.surname.matches(nameRegex) && userData.surname.isNotEmpty()) {
             _state.value = JoinState.Error.Surname
             false
         } else {
