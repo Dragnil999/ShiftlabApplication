@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="title_text">Регистрация</string>
     <string name="name_hint">Введите имя</string>
     <string name="surname_hint">Введите фамилию</string>
@@ -14,6 +14,7 @@
     <string name="repeat_password_text">Повторите пароль</string>
     <string name="name_error">Имя должно состоять из более чем 2-ух символов</string>
     <string name="surname_error">Фамилия должна состоять из более чем 2-ух символов</string>
+    <string name="birth_date_error">Неверная дата рождения</string>
     <string name="password_error">Пароль должен содержать цифры, заглавные и строчные буквы</string>
     <string name="repeat_password_error">Пароли не совпадают</string>
 </resources>

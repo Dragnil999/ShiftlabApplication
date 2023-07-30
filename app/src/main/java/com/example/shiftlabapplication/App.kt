@@ -1,6 +1,7 @@
 package com.example.shiftlabapplication
 
 import android.app.Application
+import com.example.shiftlabapplication.data.di.dataModule
 import com.example.shiftlabapplication.di.appModule
 import com.example.shiftlabapplication.features.join.di.joinModule
 import com.example.shiftlabapplication.features.start.di.startModule
@@ -19,6 +20,7 @@ class App : Application() {
                 appModule,
                 startModule,
                 joinModule,
+                dataModule,
             )
         }
     }

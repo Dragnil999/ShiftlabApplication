@@ -15,6 +15,7 @@ public class FragmentStartBindingImpl extends FragmentStartBinding  {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.hello_button, 1);
+        sViewsWithIds.put(R.id.progress_bar, 2);
     }
     // views
     @NonNull
@@ -25,11 +26,12 @@ public class FragmentStartBindingImpl extends FragmentStartBinding  {
     // Inverse Binding Event Handlers
 
     public FragmentStartBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 2, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 3, sIncludes, sViewsWithIds));
     }
     private FragmentStartBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (android.widget.Button) bindings[1]
+            , (android.widget.ProgressBar) bindings[2]
             );
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         setRootTag(root);

@@ -6,6 +6,7 @@ sealed class JoinState {
         object NotAllData : Error()
         object Name : Error()
         object Surname : Error()
+        object BirthYear: Error()
         object Password : Error()
         object RepeatPassword : Error()
     }

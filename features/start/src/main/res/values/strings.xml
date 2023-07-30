@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_text">Привет</string>
+    <string name="dialog_title">Приветствие</string>
+    <string name="user_greetings_text">Добро пожаловать %1$s!!!</string>
+    <string name="cancel_button">Закрыть</string>
 </resources>

@@ -51,15 +51,24 @@ class JoinFragment : Fragment() {
     private fun setListeners() {
         with(binding) {
             nameField.doOnTextChanged { text, _, _, _ ->
-                viewModel.name = text.toString()
+                with(viewModel) {
+                    userData = userData.copy(name = text.toString())
+                    checkSummary()
+                }
+                /*viewModel.name = text.toString()
+                viewModel.userData = viewModel.userData.copy(name = text.toString())
                 viewModel.checkName()
-                viewModel.checkSummary()
+                viewModel.checkSummary()*/
             }
 
             surnameField.doOnTextChanged { text, _, _, _ ->
-                viewModel.surname = text.toString()
+                with(viewModel) {
+                    userData = userData.copy(surname = text.toString())
+                    checkSummary()
+                }
+                /*viewModel.surname = text.toString()
                 viewModel.checkSurname()
-                viewModel.checkSummary()
+                viewModel.checkSummary()*/
             }
 
             birthDateField.setOnClickListener {
@@ -70,8 +79,12 @@ class JoinFragment : Fragment() {
                                 val date = bundle.getSerializable(DateDialog.BUNDLE_DATE, Date::class.java) as Date
                                 val str = DateFormat.getPatternInstance("dd.MM.yyyy").format(date)
                                 birthDateField.setText(str)
-                                viewModel.birthDate = str
-                                viewModel.checkSummary()
+                                with(viewModel) {
+                                    userData = userData.copy(birthDate = date)
+                                    checkSummary()
+                                }
+                                /*viewModel.birthDate = str
+                                viewModel.checkSummary()*/
                             }
                         }
                     show(
@@ -82,9 +95,13 @@ class JoinFragment : Fragment() {
             }
 
             passwordField.doOnTextChanged { text, _, _, _ ->
-                viewModel.password = text.toString()
+                with(viewModel) {
+                    userData = userData.copy(password = text.toString())
+                    checkSummary()
+                }
+                /*viewModel.password = text.toString()
                 viewModel.checkPassword()
-                viewModel.checkSummary()
+                viewModel.checkSummary()*/
             }
 
             repeatPasswordField.doOnTextChanged { text, _, _, _ ->
@@ -93,7 +110,7 @@ class JoinFragment : Fragment() {
             }
 
             joinButton.setOnClickListener {
-                viewModel.goToStartScreen()
+                viewModel.sendUserName()
             }
         }
     }
@@ -106,6 +123,7 @@ class JoinFragment : Fragment() {
         when (state) {
             is JoinState.Error.Name -> renderNameError()
             is JoinState.Error.Surname -> renderSurnameError()
+            is JoinState.Error.BirthYear -> renderBirthYearError()
             is JoinState.Error.Password -> renderPasswordError()
             is JoinState.Error.RepeatPassword -> renderRepeatPasswordError()
             is JoinState.NoError -> renderRegistration()
@@ -133,6 +151,13 @@ class JoinFragment : Fragment() {
         with(binding) {
             joinButton.isEnabled = false
             surnameField.error = getString(R.string.surname_error)
+        }
+    }
+
+    private fun renderBirthYearError() {
+        with(binding) {
+            joinButton.isEnabled = false
+            birthDateField.error = getString(R.string.birth_date_error)
         }
     }
 
