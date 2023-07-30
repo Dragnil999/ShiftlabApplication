@@ -7,5 +7,5 @@ import com.github.terrakok.cicerone.Router
 
 fun buildCicerone(): Cicerone<Router> =
     Cicerone.create().apply {
-        router.newRootScreen(JoinScreen.getJoinScreen())
+        router.newRootScreen(StartScreen.getStartScreen())
     }

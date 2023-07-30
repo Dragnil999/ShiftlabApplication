@@ -10,5 +10,12 @@ sealed class JoinState {
         object Password : Error()
         object RepeatPassword : Error()
     }
+    sealed class Solved : JoinState() {
+        object Name : Solved()
+        object Surname : Solved()
+        object BirthDate : Solved()
+        object Password : Solved()
+        object RepeatPassword : Solved()
+    }
     object NoError : JoinState()
 }

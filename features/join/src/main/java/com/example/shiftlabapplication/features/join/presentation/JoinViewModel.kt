@@ -10,6 +10,7 @@ import com.example.shiftlabapplication.features.join.domain.entity.UserDataEntit
 import com.example.shiftlabapplication.features.join.domain.usecase.SendNameUseCase
 import com.example.shiftlabapplication.features.join.navigation.JoinNavigation
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class JoinViewModel(
     private val navigation: JoinNavigation,
@@ -32,6 +33,7 @@ class JoinViewModel(
             _state.value = JoinState.Error.Name
             false
         } else {
+            _state.value = JoinState.Solved.Name
             _state.value = JoinState.Error.NotAllData
             true
         }
@@ -42,6 +44,7 @@ class JoinViewModel(
             _state.value = JoinState.Error.Surname
             false
         } else {
+            _state.value = JoinState.Solved.Surname
             _state.value = JoinState.Error.NotAllData
             true
         }
@@ -49,12 +52,13 @@ class JoinViewModel(
 
     private fun checkBirthDate(): Boolean {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = userData.birthDate.time
+        calendar.timeInMillis = userData.birthDate?.time ?: 0
 
-        return if (calendar.get(Calendar.YEAR) > MIN_BIRTH_YEAR) {
+        return if (calendar.get(Calendar.YEAR) > MIN_BIRTH_YEAR && userData.birthDate != null) {
             _state.value = JoinState.Error.BirthYear
             false
         } else {
+            _state.value = JoinState.Solved.BirthDate
             _state.value = JoinState.Error.NotAllData
             true
         }
@@ -65,6 +69,7 @@ class JoinViewModel(
             _state.value = JoinState.Error.Password
             false
         } else {
+            _state.value = JoinState.Solved.Password
             _state.value = JoinState.Error.NotAllData
             true
         }
@@ -77,6 +82,7 @@ class JoinViewModel(
             false
         } else {
             isPasswordChecked = true
+            _state.value = JoinState.Solved.RepeatPassword
             _state.value = JoinState.Error.NotAllData
             true
         }
@@ -89,9 +95,8 @@ class JoinViewModel(
     fun checkSummary() {
         checkName()
         checkSurname()
+        checkBirthDate()
         checkPassword()
-        Log.d("JoinViewModel", "state is ${_state.value}")
-        Log.d("JoinViewModel", "checkAllDataSet() = ${checkAllDataSet()}")
         if (_state.value is JoinState.Error.NotAllData && checkAllDataSet()) {
             _state.value = JoinState.NoError
         }

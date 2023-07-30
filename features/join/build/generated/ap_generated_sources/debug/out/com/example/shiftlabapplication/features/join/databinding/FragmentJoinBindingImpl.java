@@ -14,17 +14,17 @@ public class FragmentJoinBindingImpl extends FragmentJoinBinding  {
     static {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.name_field, 1);
-        sViewsWithIds.put(R.id.surname_field, 2);
-        sViewsWithIds.put(R.id.birth_date_field, 3);
-        sViewsWithIds.put(R.id.password_field, 4);
-        sViewsWithIds.put(R.id.repeat_password_field, 5);
-        sViewsWithIds.put(R.id.join_button, 6);
-        sViewsWithIds.put(R.id.name_text, 7);
-        sViewsWithIds.put(R.id.surname_text, 8);
-        sViewsWithIds.put(R.id.birth_date_text, 9);
-        sViewsWithIds.put(R.id.password_text, 10);
-        sViewsWithIds.put(R.id.repeat_password_text, 11);
+        sViewsWithIds.put(R.id.name_input_layout, 1);
+        sViewsWithIds.put(R.id.name_field, 2);
+        sViewsWithIds.put(R.id.surname_input_layout, 3);
+        sViewsWithIds.put(R.id.surname_field, 4);
+        sViewsWithIds.put(R.id.birth_date_input_layout, 5);
+        sViewsWithIds.put(R.id.birth_date_field, 6);
+        sViewsWithIds.put(R.id.password_input_layout, 7);
+        sViewsWithIds.put(R.id.password_field, 8);
+        sViewsWithIds.put(R.id.repeat_password_input_layout, 9);
+        sViewsWithIds.put(R.id.repeat_password_field, 10);
+        sViewsWithIds.put(R.id.join_button, 11);
         sViewsWithIds.put(R.id.title_text, 12);
     }
     // views
@@ -40,17 +40,17 @@ public class FragmentJoinBindingImpl extends FragmentJoinBinding  {
     }
     private FragmentJoinBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
-            , (android.widget.EditText) bindings[3]
-            , (android.widget.TextView) bindings[9]
-            , (android.widget.Button) bindings[6]
-            , (android.widget.EditText) bindings[1]
-            , (android.widget.TextView) bindings[7]
-            , (android.widget.EditText) bindings[4]
-            , (android.widget.TextView) bindings[10]
-            , (android.widget.EditText) bindings[5]
-            , (android.widget.TextView) bindings[11]
+            , (android.widget.EditText) bindings[6]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[5]
+            , (android.widget.Button) bindings[11]
             , (android.widget.EditText) bindings[2]
-            , (android.widget.TextView) bindings[8]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[1]
+            , (android.widget.EditText) bindings[8]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[7]
+            , (android.widget.EditText) bindings[10]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[9]
+            , (android.widget.EditText) bindings[4]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[3]
             , (android.widget.TextView) bindings[12]
             );
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];

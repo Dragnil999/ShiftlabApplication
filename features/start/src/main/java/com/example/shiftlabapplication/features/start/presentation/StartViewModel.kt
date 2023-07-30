@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shiftlabapplication.features.start.domain.entity.UserNameEntity
 import com.example.shiftlabapplication.features.start.domain.usecase.GetUserNameUseCase
 import com.example.shiftlabapplication.features.start.navigation.StartNavigation
 import com.example.shiftlabapplication.features.start.ui.HelloDialog
@@ -20,12 +21,12 @@ class StartViewModel(
     private val _state: MutableLiveData<StartState> = MutableLiveData(StartState.Loading)
     val state: LiveData<StartState> = _state
 
-    lateinit var userName: String
+    var userName = UserNameEntity()
 
     fun getUserName() {
         viewModelScope.launch {
-            userName = getUserNameUseCase().first()
-            if (userName == "Not registered") {
+            userName = userName.copy(name = getUserNameUseCase().first())
+            if (userName.name == "Not registered") {
                 goToJoinScreen()
             } else {
                 _state.value = StartState.Hello
