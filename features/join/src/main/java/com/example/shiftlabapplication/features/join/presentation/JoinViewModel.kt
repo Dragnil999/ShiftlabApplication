@@ -1,7 +1,6 @@
 package com.example.shiftlabapplication.features.join.presentation
 
 import android.icu.util.Calendar
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.example.shiftlabapplication.features.join.domain.entity.UserDataEntit
 import com.example.shiftlabapplication.features.join.domain.usecase.SendNameUseCase
 import com.example.shiftlabapplication.features.join.navigation.JoinNavigation
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class JoinViewModel(
     private val navigation: JoinNavigation,
@@ -82,7 +80,7 @@ class JoinViewModel(
             _state.value = JoinState.Error.RepeatPassword
             false
         } else {
-            isPasswordChecked = true
+            isPasswordChecked = repeatPassword.isNotEmpty()
             _state.value = JoinState.Solved.RepeatPassword
             _state.value = JoinState.Error.NotAllData
             true
@@ -103,9 +101,9 @@ class JoinViewModel(
         }
     }
 
-    fun sendUserName() {
+    fun sendUserData() {
         viewModelScope.launch {
-            sendNameUseCase(userData.name)
+            sendNameUseCase(userData)
             goToStartScreen()
         }
     }

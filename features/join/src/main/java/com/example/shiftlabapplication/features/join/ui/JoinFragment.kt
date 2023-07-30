@@ -1,9 +1,7 @@
 package com.example.shiftlabapplication.features.join.ui
 
 import android.icu.text.DateFormat
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,7 +100,7 @@ class JoinFragment : Fragment() {
             }
 
             joinButton.setOnClickListener {
-                viewModel.sendUserName()
+                viewModel.sendUserData()
             }
         }
     }
