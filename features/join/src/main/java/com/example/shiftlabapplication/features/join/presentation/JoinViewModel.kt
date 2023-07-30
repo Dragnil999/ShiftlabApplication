@@ -25,7 +25,7 @@ class JoinViewModel(
     private val passwordRegex = Regex("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9@#\$%]).{8,}")
 
     var userData: UserDataEntity = UserDataEntity()
-    var isPasswordChecked = false
+    private var isPasswordChecked = false
 
     private fun checkName(): Boolean {
         return if (!userData.name.matches(nameRegex) && userData.name.isNotEmpty()) {
