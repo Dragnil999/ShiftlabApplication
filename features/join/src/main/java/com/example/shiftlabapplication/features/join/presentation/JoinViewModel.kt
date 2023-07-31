@@ -28,7 +28,12 @@ class JoinViewModel(
     private var isPasswordChecked = false
 
     private fun checkName(): Boolean {
-        return if (!userData.name.matches(nameRegex) && userData.name.isNotEmpty()) {
+        if (userData.name.isEmpty()) {
+            _state.value = JoinState.Solved.Name
+            return false
+        }
+
+        return if (!userData.name.matches(nameRegex)) {
             _state.value = JoinState.Error.Name
             false
         } else {
@@ -39,7 +44,12 @@ class JoinViewModel(
     }
 
     private fun checkSurname(): Boolean {
-        return if (!userData.surname.matches(nameRegex) && userData.surname.isNotEmpty()) {
+        if (userData.surname.isEmpty()) {
+            _state.value = JoinState.Solved.Surname
+            return false
+        }
+
+        return if (!userData.surname.matches(nameRegex)) {
             _state.value = JoinState.Error.Surname
             false
         } else {
@@ -53,7 +63,12 @@ class JoinViewModel(
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = userData.birthDate?.time ?: 0
 
-        return if (calendar.get(Calendar.YEAR) > MIN_BIRTH_YEAR && userData.birthDate != null) {
+        if (userData.birthDate == null) {
+            _state.value = JoinState.Solved.BirthDate
+            return false
+        }
+
+        return if (calendar.get(Calendar.YEAR) > MIN_BIRTH_YEAR) {
             _state.value = JoinState.Error.BirthYear
             false
         } else {
@@ -64,7 +79,12 @@ class JoinViewModel(
     }
 
     private fun checkPassword(): Boolean {
-        return if (!userData.password.matches(passwordRegex) && userData.password.isNotEmpty()) {
+        if (userData.password.isEmpty()) {
+            _state.value = JoinState.Solved.Password
+            return false
+        }
+
+        return if (!userData.password.matches(passwordRegex)) {
             _state.value = JoinState.Error.Password
             false
         } else {
