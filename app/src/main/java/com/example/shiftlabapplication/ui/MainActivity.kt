@@ -17,4 +17,14 @@ class MainActivity : AppCompatActivity() {
 
         navigatorHolder.setNavigator(navigator)
     }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        navigatorHolder.removeNavigator()
+    }
 }
