@@ -1,6 +1,7 @@
 package com.example.shiftlabapplication.features.join.ui
 
 import android.icu.text.DateFormat
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -68,7 +69,15 @@ class JoinFragment : Fragment() {
                     this@JoinFragment.parentFragmentManager
                         .setFragmentResultListener(DateDialog.REQUEST_DATE, this) { requestKey, bundle ->
                             if (requestKey == DateDialog.REQUEST_DATE) {
-                                val date = bundle.getSerializable(DateDialog.BUNDLE_DATE, Date::class.java) as Date
+                                val date: Date = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    bundle.getSerializable(
+                                        DateDialog.BUNDLE_DATE,
+                                        Date::class.java
+                                    ) as Date
+                                } else {
+                                    bundle.getSerializable(DateDialog.BUNDLE_DATE) as Date
+                                }
+
                                 val str = DateFormat.getPatternInstance("dd.MM.yyyy").format(date)
                                 birthDateField.setText(str)
                                 with(viewModel) {
